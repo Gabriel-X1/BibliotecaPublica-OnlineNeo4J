@@ -1,0 +1,96 @@
+           Autores 
+
+create(:Autor {name:'Neil Gaiman'})
+
+create(:Autor {name:'Brad Stone'})
+
+create(:Autor {name:'Alan Moore'})
+
+create(:Autor {name:'Andy Diggle'})
+
+create(:Autor {name:'ROBERT GALBRAITH'})
+
+
+             Editoras
+
+create(:Editora {name:'Intrínseca'})
+
+create(:Editora {name:'Rocco Jovens Leitores'})
+
+create(:Editora {name:'Vertigo'})
+
+
+              Livros
+
+create(:Livro {name:'Mitologia Nórdica',Genero: 'Literatura fantástica',Ano_publicação : '2017', Preço: 'R$:28,00'})
+
+create(:Livro {name:'Stardust',Genero: 'Romance',Ano_publicação : '2007', Preço: 'R$:40,00'})
+
+create(:Livro {name:'Amazon Sem Limites',Genero: 'Negócios e Economia',Ano_publicação : '2021', Preço: 'R$:50,00'})
+
+create(:Livro {name:'Sandman Vol. 1: Preludes & Nocturnes',Genero: 'história em quadrinhos para adultos',Ano_publicação : '2018', Preço: 'R$:50,00'})
+
+create(:Livro {name:'A LOJA DE TUDO',Genero: 'Negócios e Economia',Ano_publicação : '2014', Preço: 'R$:50,00'})
+
+create(:Livro {name:'V for Vendetta',Genero: 'Thriller político',Ano_publicação : '2008', Preço: 'R$:100,00'})
+
+create(:Livro {name:'Losers Volume 3: Trifecta',Genero: 'ação',Ano_publicação : '2005', Preço: 'R$:85,00'})
+
+create(:Livro {name:'SANGUE REVOLTO – BROCHURA',Genero: 'thriller',Ano_publicação : '2021', Preço: 'R$:185,00'})
+
+create(:Livro {name:'The Losers Book Two',Genero: 'Ação',Ano_publicação : '2010', Preço: 'R$:200,00'})
+
+create(:Livro {name:'A VERDADE É UMA CAVERNA NAS MONTANHAS NEGRAS',Genero: 'Horror e Ficção Científica',Ano_publicação : '2015', Preço: 'R$:20,00'})
+
+
+
+                /// relacionamentos Merges///
+
+MATCH (a:Autor {name:'Neil Gaiman'}), (b:Livro {name:'Mitologia Nórdica'})
+MERGE (a)-[r:Publicou]->(b) SET r.roles = ['Intrínseca']
+RETURN a,r,b
+
+
+MATCH (a:Autor {name:'Neil Gaiman'}), (b:Livro {name:'Mitologia Nórdica'}), (c:Editora {name:'Intrínseca'})
+MERGE (a)-[r:Escreveu]->(b)<-[d:Publicou]-(c)
+RETURN a,r,b,d
+
+MATCH (a:Autor {name:'Neil Gaiman'}), (b:Livro {name:'Stardust'}), (c:Editora {name:'Rocco Jovens Leitores'})
+MERGE (a)-[r:Escreveu]->(b)<-[d:Publicou]-(c)
+RETURN a,r,b,d
+
+MATCH (a:Autor {name:'Neil Gaiman'}), (b:Livro {name:'Sandman Vol. 1: Preludes & Nocturnes'}), (c:Editora {name:'Vertigo'})
+MERGE (a)-[r:Escreveu]->(b)<-[d:Publicou]-(c)
+RETURN a,r,b,d
+
+
+
+MATCH (a:Autor {name:'Brad Stone'}), (b:Livro {name:'Amazon Sem Limites'}), (c:Editora {name:'Intrínseca'})
+MERGE (a)-[r:Escreveu]->(b)<-[d:Publicou]-(c)
+RETURN a,r,b,d
+
+
+MATCH (a:Autor {name:'Brad Stone'}), (b:Livro {name:'A LOJA DE TUDO'}), (c:Editora {name:'Intrínseca'})
+MERGE (a)-[r:Escreveu]->(b)<-[d:Publicou]-(c)
+RETURN a,r,b,d
+
+
+MATCH (a:Autor {name:'Alan Moore'}), (b:Livro {name:'V for Vendetta'}), (c:Editora {name:'Vertigo'})
+MERGE (a)-[r:Escreveu]->(b)<-[d:Publicou]-(c)
+RETURN a,r,b,d
+
+
+MATCH (a:Autor {name:'Andy Diggle'}), (b:Livro {name:'Losers Volume 3: Trifecta'}), (c:Editora {name:'Vertigo'})
+MERGE (a)-[r:Escreveu]->(b)<-[d:Publicou]-(c)
+RETURN a,r,b,d
+
+
+
+MATCH (a:Autor {name:'ROBERT GALBRAITH'}), (b:Livro {name:'SANGUE REVOLTO – BROCHURA'}), (c:Editora {name:'Rocco Jovens Leitores'})
+MERGE (a)-[r:Escreveu]->(b)<-[d:Publicou]-(c)
+RETURN a,r,b,d
+
+
+MATCH (a:Autor {name:'Andy Diggle'}), (b:Livro {name:'The Losers Book Two'}), (c:Editora {name:'Vertigo'})
+MERGE (a)-[r:Escreveu]->(b)<-[d:Publicou]-(c)
+RETURN a,r,b,d
